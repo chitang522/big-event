@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class Category { 
+public class Category {
     private Integer id;//主键ID
     private String categoryName;//分类名称
     private String categoryAlias;//分类别名
