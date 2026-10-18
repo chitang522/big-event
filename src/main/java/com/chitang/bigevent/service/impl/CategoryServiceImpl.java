@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> list() {
         Map<String,Object> map = ThreadLocalUtil.get();
-        Integer userId =  (Integer) map.get("id");
+        Integer userId = (Integer) map.get("id");
         return categoryMapper.list(userId);
 
     }
@@ -45,7 +45,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void update(Category category) {
-        category.setUpdateTime(LocalDateTime.now());
         categoryMapper.update(category);
     }
+
+    @Override
+    public void delete(Integer id) {
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer userId = (Integer) map.get("id");
+        categoryMapper.delete(id,userId);
+    }
+
+
 }
