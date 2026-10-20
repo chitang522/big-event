@@ -19,6 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //令牌验证
@@ -48,7 +49,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
-        //清空ThreadLocal中的数据、
+        //清空ThreadLocal中的数据
         ThreadLocalUtil.remove();
     }
 }

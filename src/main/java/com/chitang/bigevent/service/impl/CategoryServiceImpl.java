@@ -1,7 +1,6 @@
 package com.chitang.bigevent.service.impl;
 
 import com.chitang.bigevent.mapper.CategoryMapper;
-import com.chitang.bigevent.mapper.CategoryMapper;
 import com.chitang.bigevent.pojo.Category;
 import com.chitang.bigevent.service.CategoryService;
 import com.chitang.bigevent.utils.ThreadLocalUtil;
@@ -23,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
         //补充属性值
         category.setCreateTime(LocalDateTime.now());
         category.setUpdateTime(LocalDateTime.now());
-        Map<String,Object> map = ThreadLocalUtil.get();
+        Map<String, Object> map = ThreadLocalUtil.get();
         Integer id = (Integer) map.get("id");
         category.setCreateUser(id);
         categoryMapper.add(category);
@@ -31,10 +30,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> list() {
-        Map<String,Object> map = ThreadLocalUtil.get();
+        Map<String, Object> map = ThreadLocalUtil.get();
         Integer userId = (Integer) map.get("id");
         return categoryMapper.list(userId);
-
     }
 
     @Override
@@ -50,10 +48,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(Integer id) {
-        Map<String,Object> map = ThreadLocalUtil.get();
+        Map<String, Object> map = ThreadLocalUtil.get();
         Integer userId = (Integer) map.get("id");
-        categoryMapper.delete(id,userId);
+        categoryMapper.delete(id, userId);
     }
-
-
 }

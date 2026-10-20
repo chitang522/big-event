@@ -15,7 +15,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.channels.Pipe;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -30,43 +29,41 @@ public class UserController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-
     @PostMapping("/register")
     public Result register(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$") String password) {
-
-            //查询用户
-            User u = userService.findByUserName(username);
-            if (u == null) {
-                //没有占用
-                //注册
-                userService.register(username,password);
-                return Result.success();
-            }else {
-                //占用
-                return Result.error("用户名被占用");
-            }
+        //查询用户
+        User u = userService.findByUserName(username);
+        if (u == null) {
+            //没有占用
+            //注册
+            userService.register(username, password);
+            return Result.success();
+        } else {
+            //占用
+            return Result.error("用户名被占用");
+        }
     }
 
     @PostMapping("/login")
-    public Result<String> login(@Pattern(regexp = "^\\S{4,16}$") String username, @Pattern(regexp = "^\\S{4,16}$") String password){
+    public Result<String> login(@Pattern(regexp = "^\\S{4,16}$") String username, @Pattern(regexp = "^\\S{4,16}$") String password) {
 
         //根据用户名查询用户
         User loginUser = userService.findByUserName(username);
         //判断该用户是否存在
-        if(loginUser==null){
+        if (loginUser == null) {
             return Result.error("用户名错误");
         }
         //判断密码是否正确 loginUser对象中的password是密文
         if (Md5Util.getMD5String(password).equals(loginUser.getPassword())) {
             //登录成功
-            Map<String,Object> claims = new HashMap<>();
-            claims.put("id",loginUser.getId());
-            claims.put("username",loginUser.getUsername());
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", loginUser.getId());
+            claims.put("username", loginUser.getUsername());
             String token = JwtUtil.genToken(claims);
             //把token存储在redis中
             ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
 
-            operations.set(token,token,15, TimeUnit.DAYS);
+            operations.set(token, token, 15, TimeUnit.DAYS);
 
             return Result.success(token);
         }
@@ -74,12 +71,9 @@ public class UserController {
     }
 
     @GetMapping("/userInfo")
-    public Result<User> userInfo(/*@RequestHeader(name = "Authorization") String token*/){
+    public Result<User> userInfo() {
         //根据用户名查询用户
-/*        Map<String, Object> map = JwtUtil.parseToken(token);
-        String username = (String) map.get("username");*/
-
-        Map<String,Object> map = ThreadLocalUtil.get();
+        Map<String, Object> map = ThreadLocalUtil.get();
         String username = (String) map.get("username");
         User user = userService.findByUserName(username);
         return Result.success(user);
@@ -87,19 +81,19 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public Result update(@RequestBody @Validated User user){
+    public Result update(@RequestBody @Validated User user) {
         userService.update(user);
         return Result.success();
     }
 
     @PatchMapping("/updateAvatar")
-    public Result updateAvatar(@RequestParam  @URL String avatarUrl){
+    public Result updateAvatar(@RequestParam @URL String avatarUrl) {
         userService.updateAvatar(avatarUrl);
         return Result.success();
     }
 
     @PatchMapping("/updatePwd")
-    public Result updatePwd(@RequestBody Map<String,String> params,@RequestHeader("Authorization") String token){
+    public Result updatePwd(@RequestBody Map<String, String> params, @RequestHeader("Authorization") String token) {
         //1，校验参数
         String oldPwd = params.get("old_pwd");
         String newPwd = params.get("new_pwd");
@@ -111,14 +105,14 @@ public class UserController {
 
         //原密码是否正确
         //调用userService根据用户名拿到密码，再和oldPwb比对
-        Map<String,Object> map = ThreadLocalUtil.get();
+        Map<String, Object> map = ThreadLocalUtil.get();
         String username = (String) map.get("username");
         User loginUser = userService.findByUserName(username);
-        if(!loginUser.getPassword().equals(Md5Util.getMD5String(oldPwd))){
+        if (!loginUser.getPassword().equals(Md5Util.getMD5String(oldPwd))) {
             return Result.error("原密码不正确");
         }
         //newPwd和rePwd是否一样
-        if (!rePwd.equals(newPwd)){
+        if (!rePwd.equals(newPwd)) {
             return Result.error("两次填写的密码不一样");
         }
         //2.调用service完成密码更新

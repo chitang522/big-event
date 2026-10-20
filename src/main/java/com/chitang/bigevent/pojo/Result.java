@@ -1,12 +1,10 @@
 package com.chitang.bigevent.pojo;
 
-
-//统一响应结果
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//统一响应结果
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

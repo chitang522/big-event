@@ -1,6 +1,5 @@
 package com.chitang.bigevent.pojo;
 
-
 import com.chitang.bigevent.anno.State;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
@@ -33,10 +32,9 @@ public class Article {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;//更新时间
 
+    public interface Add {
+    }
 
-    public interface Add{}
-    public interface Update{}
-
+    public interface Update {
+    }
 }
-
-

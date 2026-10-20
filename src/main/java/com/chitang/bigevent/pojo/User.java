@@ -1,7 +1,5 @@
 package com.chitang.bigevent.pojo;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

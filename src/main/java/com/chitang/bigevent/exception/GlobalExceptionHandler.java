@@ -1,6 +1,5 @@
 package com.chitang.bigevent.exception;
 
-import ch.qos.logback.core.util.StringUtil;
 import com.chitang.bigevent.pojo.Result;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;

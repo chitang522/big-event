@@ -25,7 +25,7 @@ public class ArticleServiceImpl implements ArticleService {
         //补充属性值
         article.setCreateTime(LocalDateTime.now());
         article.setUpdateTime(LocalDateTime.now());
-        Map<String,Object> map = ThreadLocalUtil.get();
+        Map<String, Object> map = ThreadLocalUtil.get();
         Integer userId = (Integer) map.get("id");
         article.setCreateUser(userId);
         articleMapper.add(article);
@@ -39,9 +39,9 @@ public class ArticleServiceImpl implements ArticleService {
         PageHelper.startPage(pageNum, pageSize);
 
         //3.调用mapper
-        Map<String,Object> map = ThreadLocalUtil.get();
+        Map<String, Object> map = ThreadLocalUtil.get();
         Integer userId = (Integer) map.get("id");
-        List<Article> as = articleMapper.list(userId,categoryId,state);
+        List<Article> as = articleMapper.list(userId, categoryId, state);
         Page<Article> p = (Page<Article>) as;
 
         //把数据填充到PageBeam对象中
@@ -63,8 +63,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void delete(Integer id) {
-        Map<String,Object> map = ThreadLocalUtil.get();
+        Map<String, Object> map = ThreadLocalUtil.get();
         Integer userId = (Integer) map.get("id");
-        articleMapper.delete(id,userId);
+        articleMapper.delete(id, userId);
     }
 }
