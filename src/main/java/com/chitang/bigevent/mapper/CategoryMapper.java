@@ -26,6 +26,6 @@ public interface CategoryMapper {
     void update(Category category);
 
     //删除
-    @Delete("delete from category where id = #{id}")
-    void delete(Integer id,Integer userId);
+    @Delete("delete from category where id = #{id} and create_user=#{userId}")
+    void delete(@Param("id") Integer id,@Param("userId") Integer userId);
 }

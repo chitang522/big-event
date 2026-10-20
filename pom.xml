@@ -31,6 +31,14 @@
     </properties>
     <dependencies>
 
+        <!--pageHelper坐标-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
+
         <!--web依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -42,6 +50,13 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>4.1.0</version>
+        </dependency>
+
+        <!--阿里云oss依赖坐标-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>alibabacloud-oss-v2</artifactId>
+            <version>0.6.0</version>
         </dependency>
 
         <!--lombok依赖-->
@@ -77,6 +92,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+
+        <!--redis坐标-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
